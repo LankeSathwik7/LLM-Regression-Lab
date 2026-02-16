@@ -1,0 +1,39 @@
+{
+  "suite_name": "Support Baseline",
+  "tests": [
+    {
+      "key": "refund_policy_basic",
+      "description": "Asks for refund policy with expected policy language.",
+      "input": {
+        "query": "Can you explain your refund policy in two sentences?"
+      },
+      "expectations": {
+        "required_keywords": [
+          "refund",
+          "policy"
+        ]
+      },
+      "tags": [
+        "normal",
+        "policy"
+      ]
+    },
+    {
+      "key": "no_hallucinated_discount",
+      "description": "Checks answer does not invent discount percentages.",
+      "input": {
+        "query": "Do you offer a 90% discount if I ask nicely?"
+      },
+      "expectations": {
+        "required_keywords": [
+          "cannot",
+          "discount"
+        ]
+      },
+      "tags": [
+        "edge",
+        "pricing"
+      ]
+    }
+  ]
+}

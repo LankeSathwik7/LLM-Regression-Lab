@@ -1,0 +1,38 @@
+name: llm-lab-pr
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Trigger LLM Lab run
+        id: run_eval
+        env:
+          LLM_LAB_API_URL: ${{ secrets.LLM_LAB_API_URL }}
+          LLM_LAB_INTERNAL_API_KEY: ${{ secrets.LLM_LAB_INTERNAL_API_KEY }}
+          LLM_LAB_USER_ID: ${{ secrets.LLM_LAB_USER_ID }}
+        run: |
+          node cli/llm-lab.mjs run --suite "${{ secrets.LLM_LAB_SUITE_ID }}" --model gpt-4.1-mini --temperature 0.2 > run.json
+          cat run.json
+          echo "run_id=$(node -e "console.log(require('./run.json').run.id)")" >> $GITHUB_OUTPUT
+
+      - name: Enforce pass-rate threshold
+        env:
+          LLM_LAB_API_URL: ${{ secrets.LLM_LAB_API_URL }}
+          LLM_LAB_INTERNAL_API_KEY: ${{ secrets.LLM_LAB_INTERNAL_API_KEY }}
+          LLM_LAB_USER_ID: ${{ secrets.LLM_LAB_USER_ID }}
+          RUN_ID: ${{ steps.run_eval.outputs.run_id }}
+          MIN_PASS_RATE: ${{ secrets.LLM_LAB_MIN_PASS_RATE }}
+        run: |
+          node -e "const min=Number(process.env.MIN_PASS_RATE||'0.9');fetch(`${process.env.LLM_LAB_API_URL}/api/runs/${process.env.RUN_ID}`,{headers:{'x-internal-api-key':process.env.LLM_LAB_INTERNAL_API_KEY,'x-user-id':process.env.LLM_LAB_USER_ID}}).then(r=>r.json()).then(data=>{const pr=Number(data.metrics?.pass_rate??0);console.log('pass_rate=',pr);if(pr<min){process.exit(1);}})"
