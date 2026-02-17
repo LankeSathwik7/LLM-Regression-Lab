@@ -21,7 +21,7 @@ export async function middleware(request: NextRequest) {
     data: { session }
   } = await supabase.auth.getSession();
 
-  const publicPaths = ["/login"];
+  const publicPaths = ["/login", "/auth/callback"];
   const isPublicPath = publicPaths.some((path) => request.nextUrl.pathname.startsWith(path));
   const isApiRoute = request.nextUrl.pathname.startsWith("/api");
   const isStatic = request.nextUrl.pathname.startsWith("/_next") || request.nextUrl.pathname.includes(".");
@@ -41,3 +41,4 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"]
 };
+
