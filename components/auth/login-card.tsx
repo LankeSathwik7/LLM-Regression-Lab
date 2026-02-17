@@ -38,7 +38,7 @@ export function LoginCard() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <CardTitle className="text-2xl">LLM Reliability Lab</CardTitle>
+        <CardTitle className="text-2xl">LLM Reliability Lab ??</CardTitle>
         <CardDescription>Sign in to manage eval suites and regression runs.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
@@ -62,3 +62,4 @@ export function LoginCard() {
     </Card>
   );
 }
+

@@ -45,7 +45,7 @@ export function ProjectsView() {
       <div className="space-y-4">
         <div className="panel flex flex-wrap items-center justify-between gap-3 p-5">
           <div>
-            <h1 className="text-2xl font-semibold text-slate-900">Projects</h1>
+            <h1 className="text-2xl font-semibold text-slate-900">Projects ??</h1>
             <p className="text-sm text-slate-600">Monitor quality trends and run eval suites before every release.</p>
           </div>
           <div className="flex items-center gap-2">
@@ -92,3 +92,4 @@ export function ProjectsView() {
     </AppLayout>
   );
 }
+

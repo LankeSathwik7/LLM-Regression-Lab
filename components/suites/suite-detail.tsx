@@ -261,7 +261,7 @@ export function SuiteDetail({ projectId, suiteId }: { projectId: string; suiteId
                 <CardTitle>Canonical YAML/JSON</CardTitle>
               </CardHeader>
               <CardContent>
-                <pre className="overflow-x-auto rounded-xl bg-slate-900 p-4 text-xs text-slate-100">{yamlText}</pre>
+                <pre className="code-block rounded-xl bg-slate-900 p-4 text-xs text-slate-100">{yamlText}</pre>
                 <p className="mt-3 text-sm text-slate-600">
                   Edit via Git/CLI for reviewable suite changes and then sync back through API.
                 </p>
@@ -273,3 +273,4 @@ export function SuiteDetail({ projectId, suiteId }: { projectId: string; suiteId
     </AppLayout>
   );
 }
+

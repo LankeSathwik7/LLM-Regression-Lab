@@ -1,4 +1,4 @@
-# LLM Reliability Lab
+﻿# :test_tube: LLM Reliability Lab
 
 Cloud-hosted, free-tier-friendly LLM eval and regression platform built with:
 
@@ -17,7 +17,7 @@ This repo implements the full UI-first flow:
 6. User compares baseline/candidate at `/runs/:runId/diff/:baselineId`
 7. User debugs single test at `/tests/:testId?runId=...`
 
-## Route Map
+## :world_map: Route Map
 
 - `/login`
 - `/projects`
@@ -45,7 +45,7 @@ API routes:
 - `GET /api/tests/:testId`
 - `GET /api/tests/:testId/results?runId=...`
 
-## Architecture
+## :building_construction: Architecture
 
 ### Option A (implemented now)
 
@@ -65,7 +65,7 @@ Synchronous run execution in `POST /api/suites/:suiteId/runs`:
 
 Move step 4 to a background worker that polls a jobs table. UI and DB schema remain compatible.
 
-## Database
+## :file_cabinet: Database
 
 Migration file:
 
@@ -87,7 +87,7 @@ Includes:
 - indexes for list/diff queries
 - RLS policies for per-user data isolation
 
-## Local Setup
+## :rocket: Local Setup
 
 1. Install dependencies:
 
@@ -126,7 +126,7 @@ npm run dev
 
 - `http://localhost:3000/login`
 
-## Supabase Auth Setup
+## :lock: Supabase Auth Setup
 
 In Supabase dashboard:
 
@@ -138,7 +138,7 @@ In Supabase dashboard:
    - Site URL = your Vercel URL
    - Redirect URLs include local + prod routes
 
-## Vercel Deployment
+## :cloud: Vercel Deployment
 
 1. Push repo to GitHub
 2. Import project in Vercel
@@ -146,7 +146,7 @@ In Supabase dashboard:
 4. Deploy
 5. Set same env vars for Preview + Production
 
-## CLI
+## :toolbox: CLI
 
 Script:
 
@@ -165,7 +165,7 @@ node cli/llm-lab.mjs sync --suite <suite_id> --file examples/suites/support-basi
 node cli/llm-lab.mjs run --suite <suite_id> --model gpt-4.1-mini --temperature 0.2
 ```
 
-## GitHub Actions
+## :gear: GitHub Actions
 
 Workflow file:
 
@@ -185,9 +185,11 @@ Behavior:
 2. Fetch run metrics
 3. Fail workflow if `pass_rate < LLM_LAB_MIN_PASS_RATE`
 
-## Notes
+## :memo: Notes
 
 - If `LLM_PROVIDER_API_KEY` is missing, the app uses a deterministic mock provider response so you can test the full UX without paid model calls.
 - Raw output + judge/check details are stored in `results.raw_output`.
 - Diff page compares baseline/candidate by `test_id` and surfaces regressions/improvements.
+
+
 

@@ -18,7 +18,7 @@ export function Nav() {
     <aside className="panel h-fit w-full p-3 lg:w-64">
       <div className="mb-3 border-b border-slate-200 pb-3">
         <p className="text-xs uppercase tracking-wider text-slate-500">LLM Reliability Lab</p>
-        <p className="mt-1 text-lg font-semibold text-slate-900">Control Center</p>
+        <p className="mt-1 text-lg font-semibold text-slate-900">Control Center ??</p>
       </div>
       <nav className="flex flex-col gap-1">
         {navItems.map((item) => {
@@ -42,3 +42,4 @@ export function Nav() {
     </aside>
   );
 }
+

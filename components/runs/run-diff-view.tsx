@@ -165,7 +165,7 @@ export function RunDiffView({ runId, baselineId }: { runId: string; baselineId: 
                     </CardHeader>
                     <CardContent className="space-y-2">
                       <Badge variant={selected.baseline_status === "pass" ? "success" : "danger"}>{selected.baseline_status}</Badge>
-                      <pre className="overflow-x-auto rounded-xl bg-slate-900 p-3 text-xs text-slate-100">{selected.baseline_output}</pre>
+                      <pre className="code-block rounded-xl bg-slate-900 p-3 text-xs text-slate-100">{selected.baseline_output}</pre>
                       <p className="text-sm text-slate-700">{selected.baseline_explanation}</p>
                     </CardContent>
                   </Card>
@@ -175,7 +175,7 @@ export function RunDiffView({ runId, baselineId }: { runId: string; baselineId: 
                     </CardHeader>
                     <CardContent className="space-y-2">
                       <Badge variant={selected.candidate_status === "pass" ? "success" : "danger"}>{selected.candidate_status}</Badge>
-                      <pre className="overflow-x-auto rounded-xl bg-slate-900 p-3 text-xs text-slate-100">{selected.candidate_output}</pre>
+                      <pre className="code-block rounded-xl bg-slate-900 p-3 text-xs text-slate-100">{selected.candidate_output}</pre>
                       <p className="text-sm text-slate-700">{selected.candidate_explanation}</p>
                     </CardContent>
                   </Card>
@@ -188,3 +188,4 @@ export function RunDiffView({ runId, baselineId }: { runId: string; baselineId: 
     </AppLayout>
   );
 }
+

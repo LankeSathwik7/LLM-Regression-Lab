@@ -84,13 +84,13 @@ export function TestDetail({ testId }: { testId: string }) {
               <CardContent className="space-y-3">
                 <div>
                   <p className="mb-1 text-sm font-semibold text-slate-700">Input</p>
-                  <pre className="overflow-x-auto rounded-xl bg-slate-900 p-3 text-xs text-slate-100">
+                  <pre className="code-block rounded-xl bg-slate-900 p-3 text-xs text-slate-100">
                     {JSON.stringify(data.test.input, null, 2)}
                   </pre>
                 </div>
                 <div>
                   <p className="mb-1 text-sm font-semibold text-slate-700">Expectations</p>
-                  <pre className="overflow-x-auto rounded-xl bg-slate-900 p-3 text-xs text-slate-100">
+                  <pre className="code-block rounded-xl bg-slate-900 p-3 text-xs text-slate-100">
                     {JSON.stringify(data.test.expectations, null, 2)}
                   </pre>
                 </div>
@@ -109,7 +109,7 @@ export function TestDetail({ testId }: { testId: string }) {
                     onChange={(event) => setSelectedRunId(event.target.value)}
                   />
                 </div>
-                <pre className="overflow-x-auto rounded-xl bg-slate-900 p-3 text-xs text-slate-100">
+                <pre className="code-block rounded-xl bg-slate-900 p-3 text-xs text-slate-100">
                   {JSON.stringify(result?.raw_output ?? {}, null, 2)}
                 </pre>
               </CardContent>
@@ -135,7 +135,7 @@ export function TestDetail({ testId }: { testId: string }) {
                 </div>
                 <div>
                   <p className="mb-1 text-sm font-semibold text-slate-700">Scores</p>
-                  <pre className="overflow-x-auto rounded-xl bg-slate-900 p-3 text-xs text-slate-100">
+                  <pre className="code-block rounded-xl bg-slate-900 p-3 text-xs text-slate-100">
                     {JSON.stringify(result?.scores ?? {}, null, 2)}
                   </pre>
                 </div>
@@ -151,3 +151,4 @@ export function TestDetail({ testId }: { testId: string }) {
     </AppLayout>
   );
 }
+
