@@ -191,5 +191,6 @@ Behavior:
 - Raw output + judge/check details are stored in `results.raw_output`.
 - Diff page compares baseline/candidate by `test_id` and surfaces regressions/improvements.
 
+## Acknowledgments 
 
-
+Built with ❤️ using Next.js, Supabase, Groq, Tailwind CSS, and Vercel.
