@@ -22,10 +22,19 @@ jobs:
           LLM_LAB_API_URL: ${{ secrets.LLM_LAB_API_URL }}
           LLM_LAB_INTERNAL_API_KEY: ${{ secrets.LLM_LAB_INTERNAL_API_KEY }}
           LLM_LAB_USER_ID: ${{ secrets.LLM_LAB_USER_ID }}
+          LLM_LAB_SUITE_ID: ${{ secrets.LLM_LAB_SUITE_ID }}
+          LLM_LAB_MODEL: ${{ secrets.LLM_LAB_MODEL }}
         run: |
-          node cli/llm-lab.mjs run --suite "${{ secrets.LLM_LAB_SUITE_ID }}" --model gpt-4.1-mini --temperature 0.2 > run.json
+          set -euo pipefail
+          : "${LLM_LAB_API_URL:?Missing secret LLM_LAB_API_URL}"
+          : "${LLM_LAB_INTERNAL_API_KEY:?Missing secret LLM_LAB_INTERNAL_API_KEY}"
+          : "${LLM_LAB_USER_ID:?Missing secret LLM_LAB_USER_ID}"
+          : "${LLM_LAB_SUITE_ID:?Missing secret LLM_LAB_SUITE_ID}"
+
+          MODEL="${LLM_LAB_MODEL:-llama-3.1-8b-instant}"
+          node cli/llm-lab.mjs run --suite "$LLM_LAB_SUITE_ID" --model "$MODEL" --temperature 0.2 > run.json
           cat run.json
-          echo "run_id=$(node -e "console.log(require('./run.json').run.id)")" >> $GITHUB_OUTPUT
+          echo "run_id=$(node -e \"console.log(require('./run.json').run.id)\")" >> "$GITHUB_OUTPUT"
 
       - name: Enforce pass-rate threshold
         env:
@@ -35,4 +44,5 @@ jobs:
           RUN_ID: ${{ steps.run_eval.outputs.run_id }}
           MIN_PASS_RATE: ${{ secrets.LLM_LAB_MIN_PASS_RATE }}
         run: |
-          node -e "const min=Number(process.env.MIN_PASS_RATE||'0.9');fetch(`${process.env.LLM_LAB_API_URL}/api/runs/${process.env.RUN_ID}`,{headers:{'x-internal-api-key':process.env.LLM_LAB_INTERNAL_API_KEY,'x-user-id':process.env.LLM_LAB_USER_ID}}).then(r=>r.json()).then(data=>{const pr=Number(data.metrics?.pass_rate??0);console.log('pass_rate=',pr);if(pr<min){process.exit(1);}})"
+          set -euo pipefail
+          node -e "const min=Number(process.env.MIN_PASS_RATE||'0.9');fetch(`${process.env.LLM_LAB_API_URL}/api/runs/${process.env.RUN_ID}`,{headers:{'x-internal-api-key':process.env.LLM_LAB_INTERNAL_API_KEY,'x-user-id':process.env.LLM_LAB_USER_ID}}).then(async r=>{if(!r.ok){throw new Error(`Run fetch failed: ${r.status} ${await r.text()}`)};return r.json();}).then(data=>{const pr=Number(data.metrics?.pass_rate??0);console.log('pass_rate=',pr);if(pr<min){process.exit(1);}});"
